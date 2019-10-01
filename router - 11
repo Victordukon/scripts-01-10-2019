@@ -1,0 +1,69 @@
+enable
+configure terminal
+hostname RT-11
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS"
+enable secret SenhadaEnable
+security passwords min-length 8
+login block-for 240 attempts 7 within 600
+username victor privilege 15 secret senai
+ip domain-name rede1.local
+crypto key generate rsa general-keys modulus 1024
+line console 0
+login local
+exec-timeout 10
+line vty 0 15
+transport input ssh
+login local
+exec-timeout 10
+exit
+service password-encryption
+interface gigabitethernet 0/1
+ip address 172.16.1.142 255.255.255.240
+no shutdown
+description CONEXAO COM SWITCH-CORE
+exit
+Interface g0/1.10
+encapsulation dot1Q 10
+ip address 172.16.1.10 255.255.255.128
+description VLAN10
+interface g0/1.20
+encapsulation dot1Q 20
+ip address 172.16.0.10 255.255.255.0
+description VLAN20
+interface g0/1.100
+encapsulation dot1Q 100
+ip address 172.16.1.133 255.255.255.240
+description VLAN 100
+encapsulation dot1Q 10
+interface g0/1.10
+encapsulation dot1Q 10
+ip address 172.16.1.11 255.255.255.128
+description VLAN10
+interface g0/1.20
+encapsulation dot1Q 20
+ip address 172.16.0.11 255.255.255.0
+description VLAN20
+interface g0/1.100
+encapsulation dot1Q 100
+ip address 172.16.1.133 255.255.255.240
+description VLAN 100
+interface g0/1.100
+encapsulation dot1Q 100
+ip address 172.16.1.141 255.255.255.240
+description VLAN 100
+interface g0/1.100
+encapsulation dot1Q 100
+ip address 172.16.1.140 255.255.255.240
+description VLAN 100
+interface serial 0/0/1
+ip address 200.18.189.10 255.255.255.252
+no shutdown 
+interface serial 0/0/0 
+ip address 200.18.189.5 255.255.255.252
+no shutdown
+ip route 200.18.189.8 255.255.255.252 200.18.189.9 
+ip route 200.18.189.4 255.255.255.252 200.18.189.6
+ip route 200.18.189.8 255.255.255.252 200.18.189.6
+ip route 200.18.189.4 255.255.255.252 200.18.189.9
+do wr
+© 2019 GitHub, Inc.
